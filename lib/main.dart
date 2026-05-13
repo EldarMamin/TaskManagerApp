@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/home/home_page.dart';
+import 'package:todolist/settings/settings_page.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'), 
+      home: SettingsPage(), 
     );
   }
 }
