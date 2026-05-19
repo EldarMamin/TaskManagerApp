@@ -2,11 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:todolist/add/add_page.dart';
+import 'package:todolist/settings/settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, });
 
-  final String title;
+  
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -17,7 +18,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('HomePage-Build');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -30,6 +30,18 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.grey,
           )
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, 
+              MaterialPageRoute(
+                builder: (context) => const SettingsPage(),
+                ),
+              );
+            }, 
+            icon: Icon(Icons.settings)
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -40,7 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     for (String task in tasksList) ...[
-                      // Лупа задач
                       SizedBox(height: 8),
                       tasks(context, task: task),
                     ],

@@ -27,7 +27,6 @@ class _SettingsPage extends State<SettingsPage> {
       data: isDarkTheme ? darkTheme : ThemeData.light(),
       child: Builder(
         builder: (context) {
-          
           return Scaffold(
             appBar: AppBar(
               title: Text('Настройки', style: TextStyle(fontSize: 24)),
@@ -79,13 +78,13 @@ class _SettingsPage extends State<SettingsPage> {
 
                     Spacer(),
 
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: toggleTheme,
-                        child: Icon(
-                          isDarkTheme ? Icons.toggle_off : Icons.toggle_on,
-                        ),
-                      ),
+                    Switch(
+                      value: isDarkTheme,
+                      onChanged: (value) {
+                        setState(() {
+                          isDarkTheme = value;
+                        });
+                      },
                     ),
                   ],
                 ),
