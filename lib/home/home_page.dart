@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:todolist/add/add_page.dart';
+import 'package:todolist/details/details_page.dart';
 import 'package:todolist/settings/settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, });
-
-  
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -24,22 +23,18 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         title: Text('Мои задачи'),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1), 
-          child: Container(
-            height: 1,
-            color: Colors.grey,
-          )
+          preferredSize: Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.grey),
         ),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, 
-              MaterialPageRoute(
-                builder: (context) => const SettingsPage(),
-                ),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
               );
-            }, 
-            icon: Icon(Icons.settings)
+            },
+            icon: Icon(Icons.settings),
           ),
         ],
       ),
@@ -51,9 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
               Expanded(
                 child: ListView(
                   children: [
-                    for (String task in tasksList) ...[
-                      SizedBox(height: 8),
-                      tasks(context, task: task),
+                    for(int i = 0; i < tasksList.length; ++i) ... [
+                      SizedBox(height: 8,),
+                      tasks(context, 
+                      task: tasksList[i],
+                      onTap: () => _navigateToDetailsPage(tasksList[i], i)
+                      ),
                     ],
                   ],
                 ),
@@ -88,34 +86,49 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+  void _navigateToDetailsPage(String task, int index) async {
+    final result = await Navigator.push(context, 
+    MaterialPageRoute(builder: (_) => DetailsPage(task: task))
+    );
+
+    if(result != null) {
+      setState(() {
+        tasksList[index] = result;
+      });
+    }
+  }
 }
 
-Widget tasks(BuildContext context, {required String task}) {
-  return Container(
-    padding: EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: Colors.blueAccent,
-      borderRadius: BorderRadius.circular(15),
-    ),
-    child: Row(
-      children: [
-        Icon(Icons.check_box_outlined, size: 25, color: Colors.white,),
+Widget tasks(BuildContext context, {required String task, required VoidCallback onTap}) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.check_box_outlined, size: 25, color: Colors.white),
 
-        SizedBox(width: 8),
+          SizedBox(width: 8),
 
-        Expanded(
-          child: Text(
-            task,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+          Expanded(
+            child: Text(
+              task,
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
+
