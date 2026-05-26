@@ -28,6 +28,14 @@ class _DetailsPage extends State<DetailsPage> {
           preferredSize: Size.fromHeight(1),
           child: Container(height: 1, color: Colors.grey),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+            Navigator.pop(context, 'delete');
+            }, 
+            icon: Icon(Icons.delete)
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(24),
