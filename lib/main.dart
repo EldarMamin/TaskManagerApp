@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:todolist/home/home_page.dart';
+import 'package:hive/hive.dart';
 
-void main() => runApp(MyApp());
+void main() async{
+  await Hive.initFlutter();
+  await Hive.openBox('todoBox');
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

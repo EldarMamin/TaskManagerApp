@@ -21,6 +21,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    db.loadTodos();
+
     final repo = AppRepositoryImpl(db: db);
     vm = HomeViewModel(repo: repo);
   }
@@ -58,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     for(int i = 0; i < tasksList.length; ++i) ... [
-                      SizedBox(height: 8,),
+                      SizedBox(height: 8),
                       tasks(context, 
                       task: tasksList[i].title,
                       onTap: () => _navigateToDetailsPage(tasksList[i].title, i)
